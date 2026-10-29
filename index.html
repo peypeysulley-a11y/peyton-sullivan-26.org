@@ -11,6 +11,412 @@
       if (launch) sessionStorage.setItem(key, JSON.stringify(launch));
       else sessionStorage.removeItem(key);
     } catch { launch = null; }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Peyton Sullivan | Sport Management Portfolio</title>
+<style>
+:root { color-scheme: light; --navy: #5d4937; --navy2: #80684e; --gold: #b08b57; --paper: #f7f1e7; --surface: #fffaf1; --ink: #352c24; --muted: #75695d; --line: #e5d8c5; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.6; }
+.root { background-color: var(--paper); min-height: 100vh; }
+nav { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding: 18px clamp(20px,5vw,76px); border-bottom:1px solid var(--line); background:var(--surface); position:sticky; top:0; z-index:10; }
+.brand { font-size:.88rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); }
+.brand span { color:var(--gold); }
+.navlinks { display:flex; gap:18px; flex-wrap:wrap; justify-content:flex-end; }
+.navlinks a { text-decoration:none; color:var(--muted); font-size:.83rem; font-weight:650; }
+.navlinks a:hover, a:focus { color:var(--gold); }
+.hero { background:var(--navy); color:#f7f8fa; padding:clamp(56px,9vw,112px) clamp(22px,8vw,120px) 70px; position:relative; overflow:hidden; }
+.hero:after { content:""; width:360px; height:360px; border:1px solid rgba(199,164,91,.35); border-radius:50%; position:absolute; right:-95px; top:-115px; box-shadow:0 0 0 38px rgba(199,164,91,.05),0 0 0 80px rgba(199,164,91,.04); }
+.eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.18em; font-size:.75rem; font-weight:800; }
+h1 { font-size:clamp(2.8rem,7vw,5.9rem); line-height:1.02; letter-spacing:-.055em; margin:18px 0 22px; max-width:850px; }
+.hero p { color:#d6dce5; max-width:660px; font-size:1.12rem; }
+.hero-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:30px; }
+.btn { display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--gold); background:var(--gold); color:#152238; text-decoration:none; padding:12px 18px; border-radius:4px; font-weight:800; font-size:.9rem; cursor:pointer; }
+.btn.secondary { background:transparent; color:#f7f8fa; border-color:#66758a; }
+main { max-width:1120px; margin:0 auto; padding:0 clamp(20px,4vw,40px) 64px; }
+.section { padding:70px 0 10px; scroll-margin-top:90px; }
+.section-head { display:flex; align-items:end; justify-content:space-between; gap:20px; margin-bottom:28px; }
+.section-head h2 { margin:6px 0 0; font-size:clamp(1.8rem,4vw,2.7rem); letter-spacing:-.04em; line-height:1.12; }
+.kicker { color:var(--gold); font-size:.72rem; text-transform:uppercase; letter-spacing:.16em; font-weight:850; }
+.lead { max-width:760px; color:var(--muted); font-size:1.05rem; }
+.grid { display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); gap:18px; }
+.card { background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:24px; min-width:0; }
+.span-4 { grid-column:span 4; } .span-5 { grid-column:span 5; } .span-6 { grid-column:span 6; } .span-7 { grid-column:span 7; } .span-8 { grid-column:span 8; } .span-12 { grid-column:span 12; }
+.card h3 { margin:0 0 8px; font-size:1.14rem; }
+.card p { color:var(--muted); margin:0 0 12px; }
+.card p:last-child { margin-bottom:0; }
+.tag { display:inline-block; border:1px solid var(--line); border-radius:99px; padding:5px 10px; color:var(--muted); font-size:.75rem; margin:4px 4px 0 0; }
+.callout { border-left:3px solid var(--gold); padding:4px 0 4px 20px; font-size:1.16rem; max-width:860px; }
+.callout strong { color:var(--gold); }
+.timeline { display:grid; grid-template-columns:150px 1fr; gap:20px; padding:20px 0; border-bottom:1px solid var(--line); }
+.timeline:last-child { border-bottom:0; }
+.timeline .when { color:var(--gold); font-size:.83rem; font-weight:800; }
+.timeline h3 { margin:0 0 4px; }
+.timeline p { color:var(--muted); margin:0; }
+.note { border:1px dashed var(--gold); background:#f0e5d3; color:var(--muted); border-radius:8px; padding:15px 17px; font-size:.88rem; }
+.project { display:flex; flex-direction:column; gap:12px; min-height:205px; }
+.project .number { font-size:2rem; color:var(--gold); font-weight:800; letter-spacing:-.05em; }
+.project a, .text-link { color:var(--gold); text-decoration:none; font-weight:750; }
+.project a:hover, .text-link:hover { text-decoration:underline; }
+.skill-list { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.skill-list span { padding:8px 11px; background:var(--paper); border:1px solid var(--line); border-radius:5px; font-size:.86rem; }
+.contact { background:var(--navy); color:#f7f8fa; border-radius:12px; padding:clamp(25px,5vw,48px); }
+.contact p { color:#d6dce5; }
+.contact a { color:var(--gold); }
+footer { border-top:1px solid var(--line); padding:24px clamp(20px,5vw,76px); display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px; color:var(--muted); font-size:.8rem; }
+@media(max-width:760px) { nav { align-items:flex-start; flex-direction:column; } .navlinks { gap:12px; justify-content:flex-start; } .span-4,.span-5,.span-6,.span-7,.span-8 { grid-column:span 12; } .timeline { grid-template-columns:1fr; gap:5px; } .section-head { align-items:flex-start; flex-direction:column; } }
+/* Refined editorial styling */
+:root { --gold: #b08b57; }
+body { letter-spacing: -.01em; }
+nav { backdrop-filter: blur(14px); background: color-mix(in srgb, var(--surface) 92%, transparent); box-shadow: 0 8px 28px rgba(8,20,38,.04); }
+.brand { letter-spacing: .13em; }
+.navlinks a { transition: color .2s ease; }
+.hero { background: radial-gradient(ellipse at 85% 15%, rgba(198,161,91,.16), transparent 34%), linear-gradient(135deg, var(--navy), var(--navy2)); padding-top: clamp(70px,10vw,130px); padding-bottom: clamp(70px,9vw,100px); }
+.hero:after { width:420px; height:420px; right:-120px; top:-145px; }
+.hero h1 { font-weight: 850; }
+.hero p { font-size: clamp(1.05rem,1.8vw,1.2rem); line-height: 1.8; }
+.btn { border-radius: 999px; padding: 13px 22px; transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 9px 24px rgba(0,0,0,.18); }
+.btn.secondary { border-color: rgba(255,255,255,.4); }
+main { max-width: 1180px; }
+.section { padding-top: clamp(58px,7vw,88px); }
+.section-head { margin-bottom: 32px; }
+.section-head h2 { letter-spacing: -.05em; }
+.card { border-radius: 16px; padding: clamp(22px,3vw,30px); box-shadow: 0 8px 28px rgba(10,25,45,.035); transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease; }
+.card:hover { transform: translateY(-3px); box-shadow: 0 16px 36px rgba(10,25,45,.08); border-color: rgba(198,161,91,.55); }
+.tag { background: color-mix(in srgb, var(--gold) 7%, var(--surface)); }
+.timeline { grid-template-columns: 175px 1fr; padding: 24px 0; }
+.timeline h3 { letter-spacing: -.02em; }
+.project { min-height: 240px; }
+.project .number { font-size: 2.4rem; }
+.skill-list span { border-radius: 999px; padding: 8px 13px; }
+.contact { border-radius: 20px; background: radial-gradient(ellipse at 100% 0%, rgba(198,161,91,.18), transparent 42%), linear-gradient(135deg, var(--navy), var(--navy2)); box-shadow: 0 18px 42px rgba(10,25,45,.12); }
+footer { margin-top: 30px; }
+@media(max-width:760px) { .timeline { grid-template-columns:1fr; gap:5px; } .hero:after { width:250px; height:250px; right:-130px; top:-80px; } }
+@media(prefers-reduced-motion:reduce) { *, *::before, *::after { scroll-behavior:auto !important; transition:none !important; } }
+</style>
+</head>
+<body>
+<div class="root">
+<nav aria-label="Main navigation"><div class="brand">PS <span>/</span> Sport Management</div><div class="navlinks"><a href="#about">About</a><a href="#education">Education</a><a href="#experience">Experience</a><a href="#work">Portfolio Work</a><a href="#skills">Qualifications</a><a href="#contact">Contact</a></div></nav>
+<header class="hero"><div class="eyebrow">M.S. Sport Management · Expected December 2026</div><h1>Peyton<br>Sullivan.</h1><p>Business-minded sports professional in development, bringing an athlete’s perspective, a service-first mindset, and a passion for creating meaningful opportunities across the sports industry. Preparing to begin a new role with Mizuno.</p><div class="hero-actions"><a class="btn" href="#about">Explore My Portfolio</a><a class="btn secondary" href="#contact">Connect With Me</a></div></header>
+<main>
+<section class="section" id="about"><div class="section-head"><div><div class="kicker">01 / Introduction</div><h2>Where business meets sport.</h2></div></div><p class="lead">My journey combines a foundation in business management, a lifelong connection to sports, and graduate study focused on the business and operations of the industry. I am especially interested in athlete representation, sports marketing, operations, fan experience, and business development.</p><div class="grid"><div class="card span-7"><h3>My professional story</h3><p>As a former high-school softball player and lifelong sports fan, I understand how much sports can shape a person's discipline, confidence, and sense of community. My business education and current graduate studies are helping me connect that perspective with the professional skills needed to contribute to sports organizations and support athletes.</p><p>I am continuing to learn through coursework, industry events, networking, and hands-on professional experiences as I work toward a career in the sports industry.</p></div><div class="card span-5"><div class="kicker">Personal mission statement</div><h3>Help people and teams reach their potential.</h3><p>My mission is to use my education, communication skills, and passion for sports to help athletes and organizations navigate the business of sports, build meaningful relationships, and create opportunities for long-term success.</p></div></div></section>
+<section class="section" id="education"><div class="section-head"><div><div class="kicker">02 / Education</div><h2>Learning with purpose.</h2></div></div><div class="grid"><div class="card span-6"><div class="kicker">Graduate Studies · In Progress</div><h3>Troy University</h3><p><strong>M.S. in Sport Management</strong></p><p>Expected graduation: December 2026.</p><p>Graduate coursework supports my understanding of sport business, marketing, athlete representation, sponsorship, professional and collegiate athletics, and the legal and operational considerations that shape the industry.</p><span class="tag">Sport Business</span><span class="tag">Athlete Representation</span><span class="tag">Sponsorship</span></div><div class="card span-6"><div class="kicker">Undergraduate Degree</div><h3>Georgia Gwinnett College</h3><p><strong>B.B.A. in Business Management</strong></p><p>Built a foundation in business principles that I am continuing to apply to sports organizations, customer experience, teamwork, and professional development.</p><span class="tag">Business Management</span><span class="tag">Communication</span><span class="tag">Organization</span></div></div></section>
+<section class="section" id="experience"><div class="section-head"><div><div class="kicker">03 / Experience</div><h2>Skills built through people, sport, and service.</h2></div></div><div class="card"><div class="timeline"><div class="when">Nov 2026 – Present</div><div><h3>Customer Support Specialist · Mizuno USA</h3><p>Supports customers and sales representatives with billing, pricing, program inquiries, and rush requests. Resolves call-center concerns involving invoices, shipping errors, returns, account questions, and order changes while coordinating with internal teams and maintaining product knowledge.</p></div></div><div class="timeline"><div class="when">Aug 2026 – Present</div><div><h3>Sports Marketing Associate · Momento</h3><p>Promotes Momento’s partnership with Sports Illustrated, helping fans access free photos and building awareness and engagement around in-stadium cameras.</p></div></div><div class="timeline"><div class="when">Aug 2025 – May 2026</div><div><h3>Athletic Operations Intern · Gainesville High School</h3><p>Supported planning and execution of athletic events, game-day operations, practices, and tournaments. Maintained records for athlete eligibility, rosters, schedules, and event outcomes, and contributed to marketing and promotional initiatives.</p></div></div><div class="timeline"><div class="when">Feb 2022 – Present</div><div><h3>Customer Service Staff · Publix</h3><p>Provides friendly, efficient customer service, answers questions, resolves concerns, and accurately processes sales, returns, and payment transactions. Previously served as a cashier from December 2020 to June 2022.</p></div></div><div class="timeline"><div class="when">Sep 2019 – Dec 2020</div><div><h3>Sales Associate · Academy Sports + Outdoors</h3><p>Assisted shoppers with product questions and tailored recommendations while delivering attentive customer service.</p></div></div><div class="timeline"><div class="when">Industry Learning</div><div><h3>Sports Agent Bootcamp & Sportimist Summit</h3><p>Participated in industry-focused learning and networking opportunities to learn from sports professionals, explore career paths, and continue building connections in the sports business community.</p></div></div></div></section>
+<section class="section" id="work"><div class="section-head"><div><div class="kicker">04 / Selected Work</div><h2>Research, analysis, and sport business.</h2></div></div><p class="lead">A selection of completed Troy University projects showing how I connect sport law, athlete marketing, research, and the business of women’s sports. Use the full assignment library below to read the assignment text.</p><div class="grid"><div class="card span-4 project"><div class="number">01</div><div class="kicker">SM 6610 · Sport and the Law</div><h3>Knight v. Jewett: Case Brief</h3><p>Analyzed a California Supreme Court case about assumption of risk in recreational touch football. The brief explains the court’s distinction between inherent risks of sport and conduct that increases those risks, including intentional or reckless behavior outside ordinary play.</p><p><strong>My takeaway:</strong> Risk management matters, but the law distinguishes between risks inherent to a sport and unreasonable conduct that goes beyond it.</p><a href="#full-assignments">Read full case brief ↓</a><span class="tag">Case Analysis</span><span class="tag">Risk Management</span></div><div class="card span-4 project"><div class="number">02</div><div class="kicker">SM 6640 · Sport Marketing</div><h3>Athlete Endorsements: Authenticity & Purchase Intention</h3><p>Reviewed research on how perceived authenticity, athlete credibility, product fit, and an athlete’s natural voice can influence consumer purchase intention. The presentation uses A’ja Wilson’s Ruffles partnership as a practical example.</p><p><strong>My takeaway:</strong> Strong partnerships should fit the athlete and brand, build trust, and measure real consumer behavior—not just likes or views.</p><a href="#full-assignments">Read full presentation ↓</a><span class="tag">Endorsements</span><span class="tag">Consumer Behavior</span><span class="tag">Brand Fit</span></div><div class="card span-4 project"><div class="number">03</div><div class="kicker">SM 6633 · Sport Management</div><h3>Team Identification & Women’s Sport Fan Behavior</h3><p>Explored how fans’ psychological connection to a team relates to attendance, media consumption, and merchandise purchases in women’s sports compared with men’s sports. The project considers social identity, media access, and the role of fandom as advocacy.</p><p><strong>My takeaway:</strong> Growing women’s sports fandom requires more accessible media and a thoughtful strategy for building and sustaining fan relationships.</p><a href="#full-assignments">Read full research paper ↓</a><span class="tag">Women’s Sports</span><span class="tag">Research</span><span class="tag">Fan Engagement</span></div></div><p class="note" style="margin-top:18px">These projects demonstrate my ability to apply sport law, marketing research, and fan behavior concepts to real questions in the sports industry. The full assignment text is available in the library below for faculty review.</p></section>
+<section class="section" id="full-assignments"><div class="section-head"><div><div class="kicker">04B / Full Assignment Library</div><h2>Open the complete assignment text.</h2></div></div><p class="lead">Select an assignment to expand its contents. This makes the full written work readable directly from the portfolio without relying on private chat attachment links.</p>
+<details class="card span-12"><summary style="cursor:pointer;font-size:1.1rem;font-weight:800;color:var(--ink)">01 · SM 6610 — Knight v. Jewett Case Brief</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere;font-family:inherit;color:var(--muted);line-height:1.75;margin-top:20px">SM 6610 | Sport and the Law
+Week 2 Case Brief Template
+
+Case: Knight v. Jewett, 3 Cal. 4th 296 (1992)
+
+Student Name: Peyton Sullivan
+
+Instructions
+
+Read the assigned court opinion and complete each section below in your own words. Aim for approximately 1–2 pages of analysis, excluding this instruction text if retained. Use specific facts and reasoning from the opinion, not merely a summary of the outcome. Maintain Times New Roman, 12-point font, and double spacing for your responses.
+
+1. Relevant Facts
+
+Identify the parties, the incident, the alleged wrongdoing, and the procedural context. Include only facts material to the legal dispute.
+
+Kendra Knight and Michael Jewett, A super bowl party in 1987, they were playing a halftime game of touch football. Knight had told Jewett to play less rough or she would stop playing. On the very next play, Jewett ran into Knight, knocked her down, and stepped on her hand. After three failed operations Knight had her little finger amputated. She sued for negligence and assault and battery. The parties disputed the details of the play. Knight and a teammate said Jewett ran into her from behind. Jewett said he jumped for an interception and landed on her. Jewett moved for summary judgment, arguing that by playing she had implied that there will be a risk of injury. The trial court granted it, and the Court of Appeal affirmed. The Courts of Appeal were split on how assumption of risk survives after Li v. Yellow Cab (1975), which adopted comparative fault, so the California Supreme Court took the case.
+
+2. Legal Issue
+
+State the legal question the court was asked to decide, preferably as a question.
+
+How does the assumption of risk doctrine work now that California uses comparative fault instead of the all-or-nothing contributory negligence rule?
+
+3. Court’s Holding and Reasoning
+
+Explain the outcome and why the court reached it. Identify the rule governing participants in active sports.
+
+The court affirmed summary judgement for Jewett. Reasoning being 1. Two types of assumption risk. Primary being the defendant owes no legal duty to protect the plaintiff from a particular risk. The plaintiff is completely barred from recovery. Secondary is the defendant did owe a duty and breached it, but the plaintiff knowingly encountered the risk. This came to a comparative fault, so the jury apportions responsibility rather than barring recovery. 2. Rejection of the “reasonable v. unreasonable” approach. Some Courts of Appeal had distinguished based on whether the plaintiff acted reasonably in encountering the risk. The court said this misreads Li. The real distinction is whether the defendant owed a duty. 3. Rejection of “implied consent”. The dissent argued that plaintiffs implied consent to known risks. The court called this a legal fiction. It would also make liability depend on each plaintiff’s subjective knowledge and would make summary judgement rarely available. The rule for participants in sports, defendants generally have no duty to eliminate risks inherent in the sport. They do have to duty not to increase those risks. For coparticipants, the court adopted the majority rule: a participant breaches a duty only if they intentionally injure another player or act so recklessly as to be totally outside the range of ordinary activity involved in the sport.
+
+4. Negligence Elements
+
+Discuss duty, breach, causation, and damages as they relate to the allegations. Which element was decisive, and why?
+
+Causation and damages weren’t really in question. Jewett’s collision with Knight and stepping on her hand caused her hand injury and ended up losing her finger. Duty and breach were the big ones. The court said that in an active sport, participants only owe each other a limited duty: don’t intentionally hurt someone, and don’t act so recklessly that it’s totally outside normal range of play. Even if Knight’s version is true, Jewett was at most careless, so he didn’t breach any duty. Duty was the decisive element. It’s a legal question for the judge, not the jury, so the disagreements about exactly what happened on the play didn’t matter and summary judgment was proper.
+
+5. Assumption of Risk
+
+Explain how primary assumption of risk affects the duty analysis in this case. Distinguish inherent risks from conduct that increases those risks.
+
+This case was primary. The court didn’t ask whether Knight personally accepted the risk. It asked what duty a touch football player owes other players. Since careless contact is part of active sports, Jewett had no duty to avoid it, and comparative fault never came up. The court also separated inherent risks from conduct that increases them. A defendant doesn’t have to remove risks that come with the sport, but they can’t make those risks worse. Here, rough, careless play was an inherent risk of touch football, and Jewett’s conduct wasn’t reckless enough to count as increasing it. The court’s concern was that liability for ordinary carelessness would discourage people from playing hard and change the sport itself.
+
+6. Sport Management Application
+
+As the director of a recreational flag football league, recommend one specific risk management measure and explain how it responds to the legal issues in this case.
+
+I’d require trained referees who strictly enforce the league’s no-contact rules and eject players for rough or reckless play. Under Knight, players owe each other a duty only to avoid intentional or reckless conduct.
+
+Reference
+
+Provide a citation to the court opinion and any additional sources consulted.
+
+Knight v. Jewett, 3 Cal. 4th 296, 834 P.2d 696 (1992).
+
+Wolohan, J. T. (2024). Law for recreation & sport managers / John T. Wolohan. (Ninth edition.). Kendall Hunt Publishing Company.</pre></details>
+<details class="card span-12"><summary style="cursor:pointer;font-size:1.1rem;font-weight:800;color:var(--ink)">02 · SM 6640 — Athlete Endorsement Presentation (11 slides)</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere;font-family:inherit;color:var(--muted);line-height:1.75;margin-top:20px">SLIDE 1
+
+ATHLETE ENDORSEMENT
+
+The Role of Authenticity in Consumer Purchase Intention
+
+Peyton Sullivan | SM6640: Sport Marketing
+
+Troy University • Dr. Park • October 2026
+
+What makes an athlete endorsement feel believable?
+
+SLIDE 2 — Why authenticity matters
+
+THE MARKETING PROBLEM
+
+2
+
+• Athletes promote products across ads and social media
+• Fame gets attention—but does not guarantee trust
+• Fans notice whether a product fits the athlete
+• Forced or money-driven posts can create doubt
+• Brands need more than visibility: they need belief
+
+RESEARCH QUESTION • How does perceived authenticity influence purchase intention?
+
+SLIDE 3 — Four ideas behind a persuasive endorsement
+
+KEY CONCEPTS
+
+AUTHENTICITY
+Does the partnership feel genuine and true to the athlete?
+
+CREDIBILITY
+Does the athlete seem trustworthy or knowledgeable?
+
+PRODUCT FIT
+Does the product make sense for this athlete?
+
+PURCHASE INTENTION
+How likely is a consumer to consider buying it?
+
+SLIDE 4 — What the research says
+
+FOUR STUDIES, FOUR USEFUL TAKEAWAYS
+
+Lee & Koo (2015): Athlete–product fit and credibility work together to shape ad, brand, and purchase responses.
+
+Nichols & Shapiro (2023): In two experiments, perceived authenticity influenced brand attitudes and purchase intentions.
+
+El-Shihy (2026): Celebrity traits and perceived product quality mattered differently across social platforms.
+
+Mascarenhas et al. (2026): Credibility, emotional appeal, and fit related to purchase intention; brand trust was a key driver.
+
+Studies used different samples and methods; results should be applied with care.
+
+SLIDE 5 — How authenticity can influence buying
+
+THE PATHWAY
+
+1. Athlete — Familiar, believable public image
+→
+2. Message — Natural voice + product fit
+→
+3. Trust — Stronger belief in the brand
+→
+4. Intention — More likely to consider buying
+
+Important: purchase intention is not the same as an actual purchase.
+
+Price, quality, need, and affordability still influence the final decision.
+
+SLIDE 6 — Real-world example: A’ja Wilson × Ruffles
+
+A CASE TO ANALYZE—NOT PROOF OF SALES IMPACT
+
+Why it stands out
+
+• 2024 report: first female athlete to sign a Ruffles endorsement deal
+• Connects a prominent women’s basketball player with a familiar snack brand
+• Shows endorsement opportunities beyond sports equipment
+
+Questions to ask
+
+• Does the partnership feel believable?
+• Can audiences see a natural connection?
+• Visibility alone does not prove authenticity or purchases
+
+Article: The MinorityEye (2024) — theminorityeye.com
+
+https://theminorityeye.com/aja-wilson-becomes-the-first-female-athlete-to-sign-a-ruffles-endorsement-deal/
+
+SLIDE 7 — Quick audience check
+
+POP QUIZ
+
+Which endorsement is more likely to feel authentic?
+
+A. An athlete promotes a product that clearly fits their sport and experience.
+
+B. An athlete promotes many unrelated products with the same generic caption.
+
+Best answer: A — product fit can help an endorsement feel more believable.
+
+Follow-up: Can a genuine endorsement still fail to sell a product?
+
+SLIDE 8 — What sport marketers should do
+
+PRACTICAL IMPLICATIONS
+
+• Choose athletes whose image fits the product
+• Let athletes communicate in a natural voice
+• Match the content to the social platform
+• Build brand trust—not just short-term attention
+• Avoid overwhelming audiences with unrelated promotions
+• Measure behavior, not only stated purchase intention
+
+The goal: a believable athlete–product–audience relationship.
+
+SLIDE 9 — Limits and final takeaway
+
+WHAT WE CAN—AND CANNOT—CONCLUDE
+
+Study limitations
+
+• Fictional posts may not reflect real-life reactions
+• Samples and platforms vary
+• Purchase intention ≠ actual purchase
+
+Answer to the research question
+
+Authenticity can strengthen brand attitudes and trust—and may increase purchase intention.
+
+But it works alongside credibility, product fit, platform, and consumer needs.
+
+Bottom line: the biggest following is not always the best partnership.
+
+SLIDE 10 — DISCUSSION
+
+If you were a sport marketer, how would you decide whether an athlete–brand partnership is truly authentic—and how would you prove that authenticity leads to actual purchases rather than just likes, views, or stated interest?
+
+Consider: product fit • audience trust • platform • sales data
+
+Thank you
+
+10
+
+SLIDE 11 — References
+
+SOURCES CITED IN THE PRESENTATION
+
+• El-Shihy (2026). Sports celebrity traits and millennial purchasing intentions. Frontiers in Sports and Active Living. doi:10.3389/fspor.2025.1747465
+• Lee & Koo (2015). Athlete endorsement, attitudes, and purchase intention. Journal of Sport Management, 29(5), 523–538. doi:10.1123/jsm.2014-0195
+• Mascarenhas et al. (2026). Athlete endorsements, brand trust, and purchase intention. Multidisciplinary Reviews. doi:10.31893/multirev.2027028
+• Nichols & Shapiro (2023). Authenticity in celebrity athlete social media endorsements. Sport Marketing Quarterly, 32(3), 175–188. doi:10.32731/SMQ.323.092023.01
+• The MinorityEye (2024). A’ja Wilson becomes the first female athlete to sign a Ruffles endorsement deal.
+
+Full article URL and complete reference details are in the original research paper.</pre></details>
+<details class="card span-12"><summary style="cursor:pointer;font-size:1.1rem;font-weight:800;color:var(--ink)">03 · SM 6633 — Team Identification and Fan Consumer Behavior in Women’s Sport</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere;font-family:inherit;color:var(--muted);line-height:1.75;margin-top:20px">Team Identification and Fan Consumer Behavior in Women's Sport:
+How Psychological Connection Drives Attendance, Media Consumption, and Merchandise Purchase
+
+Peyton Sullivan
+Troy University
+SM6633
+Dr. Park
+May 2025
+
+Team Identification and Fan Consumer Behavior in Women's Sport
+
+Problem Statement and Research Question
+
+Sport consumer behavior research has historically centered on fans of men's teams, leaving women's sport largely understudied. Team identification, the level of psychological connection an individual holds with a sports team (Wann et al., 2001) is among the strongest predictors of fan behavior, yet a review of 157 team identification journal articles found only three focused on women's sport (Clarke et al., 2024). This gap is especially consequential given the rapid growth of women's basketball: WNBA average viewership climbed from approximately 170,000 in 2017 to over 500,000 in 2023 (see Figure 2), and total women's basketball attendance rebounded sharply to roughly 1.8 million by 2023 after cratering during the COVID-19 pandemic (see Figure 3).
+
+The rationale for focusing on women's sport is threefold. First, women's sport organizations operate with limited marketing budgets, making evidence-based strategy essential (Clarke et al., 2024). Second, fans of women's sport may be motivated by factors such as gender equality advocacy that alter the classic identification–behavior relationship (Delia, 2019, 2020). Third, emerging theory argues that team identification is a multidimensional construct encompassing collective, role, and personal identity layers (Chun & Sagas, 2022), a framework with particular relevance to women's sport fandom. The research question guiding this paper is: How does team identification influence consumer behaviors attendance, media consumption, and merchandise purchase among fans of women's sport, and how do these patterns compare to men's sport fans?
+
+Literature Review
+
+Defining Team Identification
+
+Team identification is the degree to which a fan incorporates a sports team into their self-concept (Wann & Branscombe, 1993). Genchev et al. (2021) distinguish two components: emotional involvement (psychological attachment) and personal commitment (engagement in consumption behaviors that bond fan to team). Expressions like "We won" or "I am a Wings fan" capture how team identity fuses with personal identity.
+
+Chun and Sagas (2022) argue that most research has treated fan identity too narrowly, reducing it to a single social-identity dimension. Their Integrated Fan Identity (IFI) framework proposes three interlocking layers: (1) collective identity, through which fans gain self-worth from group membership and rivalry with opposing fans; (2) role identity, through which fans enact and verify the "fan" role in daily social interactions; and (3) personal identity, through which fandom aligns with core individual values and life goals. Identity work, "forming, repairing, maintaining, strengthening, or revising one's self-meanings" (Alvesson & Willmott, 2002, as cited in Chun & Sagas, 2022, p. 47) is ongoing and dynamic, meaning fan identity can deepen or shift across life stages and cultural contexts. The IFI framework is particularly relevant to women's sport, where supporting gender equality functions as a personal-identity motive that can draw fans into a team's orbit even before strong collective identification develops.
+
+Team Identification and Consumer Behavior
+
+Team identification's practical value lies in its relationship to fan spending and engagement. Genchev et al. (2021) surveyed 300 self-identified fans and found that team identification positively predicted in-person attendance, media-based attendance, word-of-mouth communication, and merchandise purchase. They describe these behaviors as constituting an "expanded relationship" between fan and team that generates revenue and promotional value for the organization while strengthening the fan's self-image through team affiliation.
+
+Clarke et al. (2024) replicated and extended these findings in women's sport. Surveying 515 fans of England's men's and women's national football teams, they found all three behavioral outcomes: media consumption, merchandise purchase, and match attendance, significantly and positively correlated with team identification for both groups. For women's team fans, identification correlated most strongly with merchandise purchase (r = 0.672), followed by media consumption (r = 0.561) and attendance (r = 0.367). Men's fans showed a more uniform pattern (~r = 0.63 for media and merchandise; r = 0.590 for attendance). Table 1 summarizes these correlations.
+
+Table 1
+
+Pearson's Correlations Between Team Identification and Consumer Behaviors (Clarke et al., 2024)
+
+Note. ** p < .01 (2-tailed).
+
+A notable finding is that highly identified women's team fans rated media consumption (M = 6.05) above in-person attendance (M = 5.85) the reverse of men's fans at every identification level. Clarke et al. (2024) attribute this to historically limited broadcast coverage of women's matches, making media engagement an act of advocacy: watching validates the league's legitimacy. As broadcast access expands evidenced by the viewership surge shown in Figure 2; attendance may increasingly close this gap.
+
+Gender and Team Identification
+
+Research on men's sport consistently finds male fans exhibit higher team identification than female fans (Genchev et al., 2021). Genchev et al. (2021) confirmed this in their Oklahoma sample (male M = 2.02 vs. female M = 2.40, lower = stronger identification; p = .001). The pattern reverses, however, in women's sport contexts. Clarke et al. (2024) found that women's team fans (M = 5.31) scored significantly higher in identification than men's team fans (M = 4.85, p < .05), and within the women's fan group there was no significant gender gap (male M = 5.23, female M = 5.34). Social Identity Theory suggests that identification runs higher in smaller, less mainstream groups whose members feel a stronger sense of distinctiveness (Goldman et al., 2016, as cited in Clarke et al., 2024) precisely the position of women's sport fanbases relative to their men's counterparts.
+
+Fan Motivations and the Visual Growth of Women's Basketball
+
+Clarke et al. (2024) used the Motivation Scale for Sport Consumption (MSSC) to identify what drives fans to support their teams. Physical Skill and Achievement were the top two motivators for highly identified fans of both the men's and women's teams directly refuting the industry assumption that women's sport is a "family outing" product. Family was the least motivating factor for highly identified fans of both teams.
+
+This emphasis on athletic quality aligns with the visual attendance data. As Figure 3 shows, women's basketball attendance peaked near 2.6 million in 2001–2002 before a prolonged decline, a sharp COVID-19 contraction (≈ 600,000 in 2021), and a strong rebound to approximately 1.8 million by 2023. The rebound tracks the rise of high-profile star athletes, suggesting that Physical Skill and Achievement motivations are translating into renewed spectator demand. Figure 1 shows that attendance concentrates in California, Texas, Arizona, New York, and Washington D.C. markets with established WNBA franchises reinforcing that local team access is a key moderator of the identification–attendance relationship.
+
+Figure 1: Women's Basketball Attendance Ratio by State
+Figure 2: WNBA Average Viewership 2016–2023 (in Thousands)
+Figure 3: Total Women's Basketball Attendance Over Time, 1997–2023
+
+Analysis and Interpretation of Findings
+
+The evidence converges on four key conclusions. First, team identification drives consumer behavior in women's sport just as it does in men's sport: higher identification predicts greater media consumption, merchandise purchase, and attendance (Clarke et al., 2024; Genchev et al., 2021). This validates investment in women's sport fan identity-building programs and confirms that the psychological mechanisms underlying fandom are not gender-specific.
+
+Second, the identification–attendance correlation is markedly weaker for women's sport fans (r = 0.367 vs. 0.590). Factors beyond identification, ticket affordability, market access, and broadcast availability play a proportionally larger role in attendance decisions for women's sport. The concentration of attendance in WNBA market states (Figure 1) supports this: access moderates how effectively identification translates into ticket purchases.
+
+Third, the IFI framework (Chun & Sagas, 2022) explains a pattern unique to women's sport: fans can be drawn in through personal-identity alignment with gender equity values (the Feminism motive, M = 5.47; Clarke et al., 2024) before strong collective identification develops. Organizations can leverage this gateway by pairing social-justice messaging with showcasing athletic excellence, the Physical Skill and Achievement motives dominant among highly identified fans to progressively deepen fan identity across all three IFI layers.
+
+Fourth, the WNBA viewership trajectory (Figure 2, ~200% growth from 2017–2023) demonstrates that media consumption is not merely a byproduct of identification but a mechanism that builds it. As new fans follow star athletes on social media and streaming platforms, identification deepens, eventually driving merchandise purchases and live attendance. Women's sport organizations should therefore treat digital and broadcast media expansion as a primary fan-development investment, not a secondary marketing channel. Taken together, these findings answer the research question affirmatively: team identification does meaningfully predict women's sport consumer behavior, but organizations must address access, broadcast equity, and multi-layered identity pathways to maximize its effect.
+
+References
+
+Chun, Y., & Sagas, M. (2022). Integrated fan identity: Theoretical framework and conceptualization. Sports Innovation Journal, 1, 45–60. https://doi.org/10.18060/26069
+
+Clarke, E., Geurin, A. N., & Burch, L. M. (2024). Team identification, motives, and behaviour: A comparative analysis of fans of men's and women's sport. Managing Sport and Leisure, 29(3), 445–468. https://doi.org/10.1080/23750472.2022.2049455
+
+Delia, E. B. (2019). Team identification in women's sport. In N. Lough & A. N. Geurin (Eds.), Routledge handbook of the business of women's sport (pp. 380–390). Routledge.
+
+Delia, E. B. (2020). The psychological meaning of team among fans of women's sport. Journal of Sport Management, 34(6), 579–590. https://doi.org/10.1123/jsm.2019-0404
+
+Genchev, S. E., Gray, G., & Wert-Gray, S. (2021). Male and female sports fans: Team identification, satisfaction with team performance, and consumption behavior. Journal of Marketing Development and Competitiveness, 15(2), 1–12.
+
+Statista. (2023). Average number of viewers of WNBA regular season games in the United States from 2016 to 2023 (in 1,000s). Retrieved from https://www.statista.com
+
+Wann, D. L., & Branscombe, N. R. (1993). Sports fans: Measuring degree of identification with their team. International Journal of Sport Psychology, 24(1), 1–17.
+
+Wann, D. L., Melnick, M. J., Russell, G. W., & Pease, D. G. (2001). Sport fans: The psychology and social impact of spectators. Routledge.
+
+TABLE 1 — Consumer Behavior | Men's Fans (r) | Women's Fans (r)
+Media Consumption | 0.635** | 0.561**
+Merchandise Purchase | 0.634** | 0.672**
+Match Attendance | 0.590** | 0.367**</pre></details>
+</section>
+<section class="section" id="skills"><div class="section-head"><div><div class="kicker">05 / Qualifications</div><h2>What I bring to a team.</h2></div></div><div class="grid"><div class="card span-7"><h3>Professional strengths</h3><div class="skill-list"><span>Communication</span><span>Customer experience</span><span>Problem-solving</span><span>Teamwork</span><span>Organization</span><span>Multitasking</span><span>Relationship-building</span><span>Adaptability</span><span>Professionalism</span><span>Microsoft Word</span><span>Microsoft Excel</span><span>Microsoft PowerPoint</span></div></div><div class="card span-5"><h3>Interests beyond the classroom</h3><p>Sports have been a part of my life from playing softball and track to following college and professional athletics. I enjoy learning about the business behind the game, connecting with people in the industry, fitness, and exploring new experiences.</p><p><strong>Areas of interest:</strong> Athlete representation, sports agency, sports operations, marketing, fan experience, and business development.</p></div></div></section>
+<section class="section" id="contact"><div class="contact"><div class="kicker">06 / Connect</div><h2 style="font-size:clamp(2rem,5vw,3.5rem);line-height:1.1;letter-spacing:-.04em;margin:8px 0 16px">Let’s connect through sport.</h2><p>I welcome opportunities to learn from sports professionals, build relationships, and contribute to work that makes a difference for athletes, teams, and fans.</p><p><strong>Email:</strong> <a href="mailto:peyton.sullivan01@gmail.com">peyton.sullivan01@gmail.com</a><br><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/peyton-sullivan" target="_blank" rel="noopener noreferrer">linkedin.com/in/peyton-sullivan</a></p><p style="font-size:.85rem">I’m always happy to connect with people working across sports, marketing, operations, and athlete representation.</p></div></section>
+<section class="section" id="portfolio-statement"><div class="section-head"><div><div class="kicker">06 / Portfolio Statement</div><h2>Learning, growth, and next steps.</h2></div></div><div class="card"><p class="lead">This portfolio brings together my academic preparation, professional experiences, and selected graduate projects as I complete my M.S. in Sport Management at Troy University.</p><p>My coursework has helped me explore the legal, marketing, and consumer-behavior concepts that shape the sports industry. Combined with my business background, customer service experience, and continued involvement in sports, these experiences are helping me build the skills and perspective to contribute to sport organizations and support athletes, teams, and fans.</p><p>As I continue developing professionally, I look forward to applying what I have learned, building relationships across the industry, and pursuing opportunities in sports business, athlete representation, marketing, and operations.</p><p><strong>Thank you for taking the time to review my portfolio.</strong></p></div></section>
+</main>
+<footer><span>© <span id="year">2026</span> Peyton Sullivan · Sport Management Portfolio</span><span>Built for professional growth and lifelong learning.</span></footer>
+</div>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
   }
   function capture() {
     const fragment = window.location.hash;
